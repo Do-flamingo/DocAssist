@@ -32,8 +32,8 @@ ChatResponse response = await client.GetResponseAsync(
 chrono.Stop();
 
 // Prix par million de tokens : à recopier depuis la page de tarifs Azure OpenAI
-const decimal prixEntree = 0m;
-const decimal prixSortie = 0m;
+const decimal prixEntree = 0.75m;
+const decimal prixSortie = 4.50m;
 long entree = response.Usage?.InputTokenCount ?? 0;
 long sortie = response.Usage?.OutputTokenCount ?? 0;
 decimal cout = entree * prixEntree / 1_000_000m + sortie * prixSortie / 1_000_000m;
