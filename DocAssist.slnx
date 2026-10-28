@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/DocAssist.Cli/DocAssist.Cli.csproj" />
+  </Folder>
+</Solution>
