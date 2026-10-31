@@ -1,5 +1,33 @@
 # Journal DocAssist
 
+## S1 · Séance 3 — ven. 30 oct. 2026
+**Fait**
+- Record `ReponseDocAssist` + enum `Certitude` dans un fichier séparé
+- Prompt System structuré : rôle, règles avec leur raison, exemples entre balises
+- `GetResponseAsync<ReponseDocAssist>` + `TryGetResult` sur 3 questions de test
+- ✅ Livrable S1 atteint : console → réponse JSON typée
+**Chiffres**
+- Tokens envoyés : 55 (séance 2) → … (séance 3)
+- Même requête sans schéma / avec schéma : … / … tokens envoyés → le schéma coûte ≈ … tokens
+**Observations**
+- Couscous : HorsSujet = …
+- PodSecurityPolicy : le modèle a … (signalé la suppression / inventé / mis Certitude Faible)
+- Sans le bloc d'exemples : …
+**Appris**
+- Sortie structurée : mon type C# devient un schéma JSON imposé au modèle
+- Le schéma impose le format, les exemples montrent le comportement
+- Schéma payé en entrée à chaque appel + JSON payé en sortie → seulement les champs utiles
+- Sans RAG, le modèle invente les sources → pas d'URL avant S6
+- `plus-tard.md` = uniquement ce qui sort du plan
+**Bloqué / résolu**
+- Coût du schéma pas clair → mesuré : même requête, avec et sans schéma
+**Questions de contrôle** (de tête)
+1. Sortie structurée plutôt que « réponds en JSON » : …
+2. Ce qui est envoyé en plus avec GetResponseAsync<T> : …
+3. Pourquoi pas d'URL de la doc à ce stade : …
+**Prochaine séance**
+- S1 · Séance 4 : AGENTS.md du POC
+
 ## S1 · Séance 2 — mer. 28 oct. 2026 (nouveau PC)
 **Fait**
 - Nouveau PC : Azure CLI installé, `az login`, abonnement sélectionné, user-secrets recréés

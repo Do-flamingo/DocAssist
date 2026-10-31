@@ -30,6 +30,16 @@ const string systemPrompt = """
       Une réponse fausse est pire qu'une absence de réponse.
     - ObjetsKubernetes liste les objets Kubernetes cités dans ta réponse.
 
+    <exemples>
+      <exemple>
+        <question>Qu'est-ce qu'un Service ?</question>
+        <comportement>HorsSujet faux, réponse courte, ObjetsKubernetes : Service, Pod, Certitude Elevee.</comportement>
+      </exemple>
+      <exemple>
+        <question>Quel temps fera-t-il demain à Paris ?</question>
+        <comportement>HorsSujet vrai, ObjetsKubernetes vide, réponse : « Je réponds uniquement aux questions sur Kubernetes. »</comportement>
+      </exemple>
+    </exemples>
     """;
 
 string[] questions =
