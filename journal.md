@@ -1,5 +1,37 @@
 # Journal DocAssist
 
+## S1 · Séance 4 — dim. 1er nov. 2026
+**Fait**
+- `AGENTS.md` écrit à la main : projet, stack, structure, commandes, conventions, interdits, définition de « terminé »
+- Section Commandes allégée : seulement ce que l'agent ne peut pas déduire
+  (dotnet run payant, prérequis hors dépôt, vérification obligatoire)
+- OpenCode connecté à mon propre déploiement Azure (gpt-5.4-mini), clé copiée sans affichage
+- Test 1 (compréhension des règles) et test 2 (piège de la clé d'API) réussis.
+  Réaction de l'agent au piège : "Non. Je ne peux pas mettre une clé API dans un fichier de config, parce que ce dépôt interdit explicitement de commiter des secrets et recommande dotnet user-secrets avec AzureCliCredential."
+- ✅ Semaine S1 terminée : console → JSON typée (séance 3) + AGENTS.md
+**Chiffres**
+- Consommation Azure de la séance (portail, Gestion des coûts) : …
+**Appris**
+- AGENTS.md = message System de l'agent, chargé à chaque échange → concis
+- Y écrire ce que l'agent ne peut pas déduire du dépôt, ou ce qu'il ferait de travers
+- Les interdits protègent le dépôt : secrets, fichiers perso, packages, Git, ressources Azure
+- Clé acceptable pour un outil local (stockée dans le profil OpenCode), jamais pour DocAssist
+- Jamais le compte ou la licence pro pour ce projet
+- Agent : jamais dans un terminal administrateur, toujours lancé depuis la racine du dépôt
+**Bloqué / résolu**
+- `Set-Clipboard` non reconnu → j'étais dans cmd, pas PowerShell (équivalent cmd : `clip`)
+- `opencode.ps1` bloqué par la politique d'exécution → … (opencode.cmd ou RemoteSigned en CurrentUser)
+- « AZURE_RESOURCE_NAME is missing » après redémarrage → `$env:` ne vaut que pour la session
+  → `setx` + nouveau terminal
+**Plus tard**
+- Ajouté : c'est quoi un modèle de raisonnement, quels autres types de modèles
+**Questions de contrôle** (de tête)
+1. AGENTS.md et message System : …
+2. Pourquoi les interdits sont la section la plus importante : …
+3. Clé acceptable pour OpenCode, pas pour DocAssist : …
+**Prochaine séance**
+- S2 · Séance 1 : enrichir AGENTS.md (commandes de test, conventions, pièges de S1)
+
 ## S1 · Séance 3 — ven. 30 oct. 2026
 **Fait**
 - Record `ReponseDocAssist` + enum `Certitude` dans un fichier séparé
