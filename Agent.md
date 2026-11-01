@@ -18,7 +18,7 @@ J'ai créé ce projet pour ma formation personnel sur le developpement .NET IA
 ## Commandes
 -Prérequis: `az login` fait, user-secrets `AZURE_OPENAI_ENDPOINT` et `AZURE_OPENAI_GPT_NAME` définis
 
-
+sur quel projet tu trava
 ## Conventions
 - Le code du projet dépend de IChatClient; 'AzureOpenAIClient' n'apparait qu' à la construction du client
 - Les réponses du modèle sont typées avec 'GetResponseAsync<T>'
