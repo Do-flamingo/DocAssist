@@ -61,7 +61,7 @@ foreach (string question in questions)
     var chrono = Stopwatch.StartNew();
 
     ChatResponse<ReponseDocAssist> response = await client.GetResponseAsync<ReponseDocAssist>(
-        messages, new ChatOptions { MaxOutputTokens = 500 });
+        messages, new ChatOptions { MaxOutputTokens = 2000 });
 
     chrono.Stop();
 
@@ -85,7 +85,7 @@ foreach (string question in questions)
     const decimal prixSortie = 4.50m;
     long entree = response.Usage?.InputTokenCount ?? 0;
     long sortie = response.Usage?.OutputTokenCount ?? 0;
-    decimal cout = entree * prixEntree / 1_000_000m + sortie * prixSortie / 1_000_000m;
+    decimal cout = CalculCout.Estimer(entree, sortie, prixEntree, prixSortie);
 
     Console.WriteLine($"Durée          : {chrono.ElapsedMilliseconds} ms");
     Console.WriteLine($"Coût estimé    : {cout:F6}");

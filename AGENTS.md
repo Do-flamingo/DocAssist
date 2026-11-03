@@ -16,13 +16,23 @@ J'ai créé ce projet pour ma formation personnel sur le developpement .NET IA
 - Cible, à ne PAS créer sans demande : `src/Api`, `src/Ingestion.Worker`, `eval/`, `deploy/helm`, `docs/adr`
 
 ## Commandes
--Prérequis: `az login` fait, user-secrets `AZURE_OPENAI_ENDPOINT` et `AZURE_OPENAI_GPT_NAME` définis
+- Vérification obligatoire avant de dire " terminé " : `dotnet build` puis `dotnet test`, depuis la racine 
+- Prérequis: `az login` fait, user-secrets `AZURE_OPENAI_ENDPOINT` et `AZURE_OPENAI_GPT_NAME` définis
+- `dotnet run` appèle le modèle azure : payant exige `az login` + les user-secrets.
+  Ne pas le lancer sans demande. Si un secret manque, s'arreter et le signaler. Ne jamais l'écrire dans un fichier.
 
-sur quel projet tu trava
+## Tests
+- Projet : `tests/DocAssist.Cli.Tests` (xUnit).
+- Un test n'appelle jamais Azure ni le réseau : remplacer `IChatClient` par un faux.
+
 ## Conventions
 - Le code du projet dépend de IChatClient; 'AzureOpenAIClient' n'apparait qu' à la construction du client
 - Les réponses du modèle sont typées avec 'GetResponseAsync<T>'
 - Pas de refactoring non demandé
+- Nommage : domaine en français (ReponseDocAssist, CalculCout), termes techniques .NET en anglais.
+- Nullable activé, aucun nouvel avertissement.
+- Une classe par fichier.
+- Les commentaires expliquent le pourquoi, pas le quoi.
 
 ## Interdits
 - Jamais de clé d'API, secret, endpoint ou ID de tenant dans le code, la config ou un fichier commité.
@@ -39,3 +49,10 @@ sur quel projet tu trava
 - `dotnet build` passe sans nouvel avertissement.
 - Lister les fichiers modifiés, avec la raison de chaque changement.
 - Si une consigne est ambiguë : poser une question plutôt que deviner.
+
+## Pièges connus
+- gpt-5.4-mini est un modèle de raisonnement : ne jamais passer `Temperature` (l'API le refuse).
+  Garder `MaxOutputTokens` ≥ 2000 : la réflexion consomme des tokens de sortie, sinon la réponse est vide.
+- Garder `AzureCliCredential` : `DefaultAzureCredential` peut choisir un autre compte connecté sur le PC.
+- Les user-secrets sont propres à chaque PC : leur absence n'est pas un bug du code.
+- Environnement : Windows + PowerShell. Pas de syntaxe bash.

@@ -2,4 +2,7 @@
   <Folder Name="/src/">
     <Project Path="src/DocAssist.Cli/DocAssist.Cli.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/DocAssist.Cli.Tests/DocAssist.Cli.Tests.csproj" />
+  </Folder>
 </Solution>
