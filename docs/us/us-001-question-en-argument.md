@@ -38,6 +38,9 @@ afin d'interroger la doc Kubernetes sans modifier le code.
 - Autorisés : `src/DocAssist.Cli/Program.cs`, `src/DocAssist.Cli/LectureQuestion.cs` (nouveau).
 - Interdits : tout `tests/` (les tests sont écrits par l'auteur), et tout le reste.
 
+## Hors périmètre
+- Mode interactif, options (`--help`…), limite de longueur, conversation multi-tours (S7).
+
 ## Vérification
 - L'agent lance dotnet build + dotnet test et montre la sortie.
 - L'auteur (pas l'agent : c'est payant) lance une fois avec une question, puis sans argument.
