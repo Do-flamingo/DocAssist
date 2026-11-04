@@ -5,7 +5,7 @@ Program.cs pose aujourd'hui 3 questions écrites en dur. Pour utiliser DocAssist
 comme un vrai outil, la question doit venir de la ligne de commande.
 
 ## Demande
-En tant qu'utilisateur de DocAsetsist, je veux passer ma question en argument,
+En tant qu'utilisateur de DocAssist, je veux passer ma question en argument,
 afin d'interroger la doc Kubernetes sans modifier le code.
 
 ## Comportement attendu

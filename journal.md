@@ -1,5 +1,34 @@
 # Journal DocAssist
 
+## S2 · Séance 2 — mer. 4 nov. 2026
+**Fait**
+- US-001 « La console lit sa question en argument » dans `docs/us/` : contexte, demande,
+  comportement, interface (`LectureQuestion.Depuis`), critères vérifiables, contraintes,
+  fichiers autorisés/interdits, vérification, méthode
+- AGENTS.md : section User stories (US dans docs/us/, ne jamais modifier les tests de l'auteur)
+- Rappel : UnitTest1.cs renommé en CalculCoutTests.cs, code commenté supprimé de Program.cs
+- US éprouvée avec l'agent Plan d'OpenCode (Tab) : plan … (conforme / écarts : …)
+**Corrigé dans l'US après le plan de l'agent**
+- …
+**Appris**
+- Un agent devine tout ce qui n'est pas écrit → une US exécutable ne laisse rien à deviner
+- Checklist (« Let Claude run without you ») : terminé ? vérification ? périmètre ? arrêt ? validation ?
+- N'écrire pour l'agent que ce qu'il ne peut pas trouver en lisant le dépôt
+- Critères d'acceptation = vérifiables par un test ou une commande
+- Si le plan dévie, on corrige l'US, pas le plan ; après 2 corrections ratées : /clear
+**Bloqué / résolu**
+- Sections de la doc introuvables → page Best practices réorganisée. Titres actuels :
+  Tell Claude what it can't see, Give Claude a check to run, Let Claude run without you
+**À finir**
+- Créer `docs/us/_modele.md` (modèle vide)
+- Ajouter « Hors périmètre » à l'US-001, corriger « DocAsetsist »
+**Questions de contrôle** (de tête)
+1. Ce qui rend une US « exécutable » par un agent : …
+2. Pourquoi des critères vérifiables par une commande : …
+3. Pourquoi lister les fichiers autorisés et interdire de toucher aux tests : …
+**Prochaine séance**
+- S2 · Séance 3 : tests d'abord. J'écris les tests de LectureQuestion, l'agent implémente jusqu'au vert
+
 ## S2 · Séance 1 — mar. 3 nov. 2026
 **Fait**
 - Projet de tests `tests/DocAssist.Cli.Tests` (xUnit), ajouté à la solution, référence vers DocAssist.Cli
