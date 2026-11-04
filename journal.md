@@ -1,5 +1,28 @@
 # Journal DocAssist
 
+## S2 · Séance 1 — mar. 3 nov. 2026
+**Fait**
+- Projet de tests `tests/DocAssist.Cli.Tests` (xUnit), ajouté à la solution, référence vers DocAssist.Cli
+- Calcul du coût sorti dans `CalculCout.Estimer` (fonction pure) ; Program.cs l'utilise
+- 2 tests verts : addition entrée + sortie, zéro token
+- AGENTS.md enrichi : vérification = build + test, section Tests, conventions
+  (nommage FR/EN, nullable, une classe par fichier, commentaires = pourquoi), pièges connus
+- Tests OpenCode : vérification → … ; piège Temperature → …
+**Appris**
+- Un agent sans commande de test ne peut pas vérifier son propre travail
+- « Terminé » = dotnet build + dotnet test verts, depuis la racine
+- Un test n'appelle jamais Azure (lent, payant, non reproductible) → fonction pure ou faux IChatClient
+- Rendre du code testable = extraire la logique dans une fonction pure
+- Un piège entre dans AGENTS.md si l'agent peut refaire l'erreur en modifiant le code
+**Bloqué / résolu**
+- …
+**Questions de contrôle** (de tête)
+1. Pourquoi un test n'appelle jamais le vrai modèle : …
+2. Pièges de S1 retenus dans AGENTS.md, et pourquoi pas les autres : …
+3. Pourquoi « terminé » inclut dotnet test et pas dotnet run : …
+**Prochaine séance**
+- S2 · Séance 2 : modèle d'US exécutable + US-001 (question en argument)
+
 ## S1 · Séance 4 — dim. 1er nov. 2026
 **Fait**
 - `AGENTS.md` écrit à la main : projet, stack, structure, commandes, conventions, interdits, définition de « terminé »

@@ -1,4 +1,4 @@
-# Agent.md - DocAssist
+# AGENTS.md - DocAssist
 
 ## Le projet
 DocAssist est un assistant de documentation sur Kubernetes. Il répond au question et cite aussi ses sources.
@@ -6,7 +6,7 @@ J'ai créé ce projet pour ma formation personnel sur le developpement .NET IA
 
 ## Stack technique
 - .NET 10, c#
-- Micorosft.Extensions.AI (ICHatClient) + AZURE OPENAI (déploiement 'gpt-5.4-mini', modèle de raisonement)
+- Microsft.Extensions.AI (IChatClient) + AZURE OPENAI (déploiement 'gpt-5.4-mini', modèle de raisonnement)
 - Authentification sans clé : 'AzureCliCredential' en local
 
 ## Structure
@@ -14,11 +14,11 @@ J'ai créé ce projet pour ma formation personnel sur le developpement .NET IA
 - `src\DocAssist.Cli`: console actuelle (appel au modèle + réponse en JSON typée)
 - `journal.md`, `plus-tard.md` : suivi personnel de l'auteur
 - Cible, à ne PAS créer sans demande : `src/Api`, `src/Ingestion.Worker`, `eval/`, `deploy/helm`, `docs/adr`
+- `tests/DocAssist.Cli.Tests` : Projet de test de la console  
 
 ## Commandes
 - Vérification obligatoire avant de dire " terminé " : `dotnet build` puis `dotnet test`, depuis la racine 
 - Prérequis: `az login` fait, user-secrets `AZURE_OPENAI_ENDPOINT` et `AZURE_OPENAI_GPT_NAME` définis
-- `dotnet run` appèle le modèle azure : payant exige `az login` + les user-secrets.
   Ne pas le lancer sans demande. Si un secret manque, s'arreter et le signaler. Ne jamais l'écrire dans un fichier.
 
 ## Tests
@@ -46,7 +46,6 @@ J'ai créé ce projet pour ma formation personnel sur le developpement .NET IA
 - ne fais pas de 'dotnet run', car le code appel le modèle et c'est payant
 
 ## Avant de dire « terminé »
-- `dotnet build` passe sans nouvel avertissement.
 - Lister les fichiers modifiés, avec la raison de chaque changement.
 - Si une consigne est ambiguë : poser une question plutôt que deviner.
 
@@ -56,3 +55,7 @@ J'ai créé ce projet pour ma formation personnel sur le developpement .NET IA
 - Garder `AzureCliCredential` : `DefaultAzureCredential` peut choisir un autre compte connecté sur le PC.
 - Les user-secrets sont propres à chaque PC : leur absence n'est pas un bug du code.
 - Environnement : Windows + PowerShell. Pas de syntaxe bash.
+
+## User stories
+- Les US sont dans `docs/us/`. Implémenter une US = respecter ses critères et ses fichiers autorisés, rien de plus.
+- Ne jamais modifier un test écrit par l'auteur pour le faire passer : signaler le désaccord.
