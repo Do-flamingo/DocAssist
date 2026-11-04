@@ -1,3 +1,4 @@
+namespace DocAssist.Cli.Tests;
 
 public class LectureQuestionTests
 {
@@ -7,14 +8,17 @@ public class LectureQuestionTests
 
     [Fact]
     public void Depuis_argument_vide_renvoie_null()
-        => Assert.Null(LectureQuestion.Depuis([""]));
+        => Assert.Null(LectureQuestion.Depuis([" "]));
 
-        // À toi : plusieurs arguments réunis par des espaces
     [Fact]
     public void Depuis_argument_reunis_par_des_espaces()
-        => Assert.Equal("test espace debut fin", LectureQuestion.Depuis(["test", "espece", "debut", "fin"]));
+        => Assert.Equal("test espace debut fin", LectureQuestion.Depuis(["test", "espace", "debut", "fin"]));
 
     [Fact]
     public void Depuis_espace_au_debut_et_a_la_fin_retires()
-        => Assert.Equal("test espace debut fin", LectureQuestion.Depuis([" ", " test", "espece", "debut", "fin ", " "]));
+        => Assert.Equal("Qu'est-ce qu'un Pod ?", LectureQuestion.Depuis(["  Qu'est-ce qu'un Pod ?  "]));
+
+    [Fact]
+    public void Depuis_cas_nominal()
+        => Assert.Equal("Pod", LectureQuestion.Depuis(["Pod"]));
 }

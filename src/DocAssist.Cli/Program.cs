@@ -8,6 +8,15 @@ var config = new ConfigurationBuilder()
     .AddUserSecrets<Program>()
     .Build();
 
+string? question = LectureQuestion.Depuis(args);
+
+if (question is null)
+{
+    Console.WriteLine("Usage : DocAssist.Cli \"<question>\"");
+    Environment.ExitCode = 1;
+    return;
+}
+
 string endpoint = config["AZURE_OPENAI_ENDPOINT"] 
     ?? throw new InvalidOperationException("Secret AZURE_OPENAI_ENDPOINT manquant");
 
@@ -42,52 +51,41 @@ const string systemPrompt = """
     </exemples>
     """;
 
-string[] questions =
-[
-    "Quelle est la différence entre un Pod et un Deployment ?",
-    "Quelle est la meilleure recette de couscous ?",
-    "Comment configurer une PodSecurityPolicy dans Kubernetes 1.30 ?"
-];
-
-foreach (string question in questions)
+List<ChatMessage> messages = new()
 {
-    List<ChatMessage> messages = new()
-    {
-        new ChatMessage(ChatRole.System, systemPrompt),
-        new ChatMessage(ChatRole.User, question)
-    };
+    new ChatMessage(ChatRole.System, systemPrompt),
+    new ChatMessage(ChatRole.User, question)
+};
 
+var chrono = Stopwatch.StartNew();
 
-    var chrono = Stopwatch.StartNew();
+ChatResponse<ReponseDocAssist> response = await client.GetResponseAsync<ReponseDocAssist>(
+    messages, new ChatOptions { MaxOutputTokens = 2000 });
 
-    ChatResponse<ReponseDocAssist> response = await client.GetResponseAsync<ReponseDocAssist>(
-        messages, new ChatOptions { MaxOutputTokens = 2000 });
+chrono.Stop();
 
-    chrono.Stop();
-
-    Console.WriteLine($"Q : {question}");
-    if (response.TryGetResult(out ReponseDocAssist? r))
-    {
-        Console.WriteLine($"  Hors sujet : {r.HorsSujet}");
-        Console.WriteLine($"  Certitude  : {r.Certitude}");
-        Console.WriteLine($"  Objets     : {string.Join(", ", r.ObjetsKubernetes)}");
-        Console.WriteLine($"  Réponse    : {r.Reponse}");
-    }
-    else
-    {
-        Console.WriteLine($"  Réponse non conforme au schéma : {response.Text}");
-    }
-
-    Console.WriteLine($"  Tokens     : {response.Usage?.InputTokenCount} envoyés, {response.Usage?.OutputTokenCount} reçus");    
-
-        // Prix par million de tokens : à recopier depuis la page de tarifs Azure OpenAI
-    const decimal prixEntree = 0.75m;
-    const decimal prixSortie = 4.50m;
-    long entree = response.Usage?.InputTokenCount ?? 0;
-    long sortie = response.Usage?.OutputTokenCount ?? 0;
-    decimal cout = CalculCout.Estimer(entree, sortie, prixEntree, prixSortie);
-
-    Console.WriteLine($"Durée          : {chrono.ElapsedMilliseconds} ms");
-    Console.WriteLine($"Coût estimé    : {cout:F6}");
-    Console.WriteLine();
+Console.WriteLine($"Q : {question}");
+if (response.TryGetResult(out ReponseDocAssist? r))
+{
+    Console.WriteLine($"  Hors sujet : {r.HorsSujet}");
+    Console.WriteLine($"  Certitude  : {r.Certitude}");
+    Console.WriteLine($"  Objets     : {string.Join(", ", r.ObjetsKubernetes)}");
+    Console.WriteLine($"  Réponse    : {r.Reponse}");
 }
+else
+{
+    Console.WriteLine($"  Réponse non conforme au schéma : {response.Text}");
+}
+
+Console.WriteLine($"  Tokens     : {response.Usage?.InputTokenCount} envoyés, {response.Usage?.OutputTokenCount} reçus");    
+
+    // Prix par million de tokens : à recopier depuis la page de tarifs Azure OpenAI
+const decimal prixEntree = 0.75m;
+const decimal prixSortie = 4.50m;
+long entree = response.Usage?.InputTokenCount ?? 0;
+long sortie = response.Usage?.OutputTokenCount ?? 0;
+decimal cout = CalculCout.Estimer(entree, sortie, prixEntree, prixSortie);
+
+Console.WriteLine($"Durée          : {chrono.ElapsedMilliseconds} ms");
+Console.WriteLine($"Coût estimé    : {cout:F6}");
+Console.WriteLine();
