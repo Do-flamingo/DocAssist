@@ -21,4 +21,8 @@ public class LectureQuestionTests
     [Fact]
     public void Depuis_cas_nominal()
         => Assert.Equal("Pod", LectureQuestion.Depuis(["Pod"]));
+
+    [Fact]
+    public void Depuis_ignore_les_arguments_vide_au_milieu()
+        => Assert.Equal("test fin", LectureQuestion.Depuis(["test", " ", "fin"]));
 }

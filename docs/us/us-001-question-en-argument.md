@@ -29,6 +29,7 @@ afin d'interroger la doc Kubernetes sans modifier le code.
 - [ ] `Depuis(["  Qu'est-ce qu'un Pod ?  "])` renvoie `"Qu'est-ce qu'un Pod ?"`.
 - [ ] Sans question : message d'usage, code de sortie 1, aucun appel au modèle.
 - [ ] `dotnet build` et `dotnet test` verts, sans nouvel avertissement.
+- [ ] Les espaces en trop entre les mots sont réduits à un seul.
 
 ## Contraintes
 - Aucun nouveau package NuGet (pas de System.CommandLine).

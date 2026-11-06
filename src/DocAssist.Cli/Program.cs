@@ -17,13 +17,13 @@ if (question is null)
     return;
 }
 
-string endpoint = config["AZURE_OPENAI_ENDPOINT"] 
+string endpoint = config["AZURE_OPENAI_ENDPOINT"]
     ?? throw new InvalidOperationException("Secret AZURE_OPENAI_ENDPOINT manquant");
 
 string deployment = config["AZURE_OPENAI_GPT_NAME"]
     ?? throw new InvalidOperationException("Secret AZURE_OPENAI_GPT_NAME manquant");
 
-   IChatClient client = new AzureOpenAIClient(new Uri(endpoint), new AzureCliCredential())
+IChatClient client = new AzureOpenAIClient(new Uri(endpoint), new AzureCliCredential())
     .GetChatClient(deployment)
     .AsIChatClient();
 
@@ -77,9 +77,9 @@ else
     Console.WriteLine($"  Réponse non conforme au schéma : {response.Text}");
 }
 
-Console.WriteLine($"  Tokens     : {response.Usage?.InputTokenCount} envoyés, {response.Usage?.OutputTokenCount} reçus");    
+Console.WriteLine($"  Tokens     : {response.Usage?.InputTokenCount} envoyés, {response.Usage?.OutputTokenCount} reçus");
 
-    // Prix par million de tokens : à recopier depuis la page de tarifs Azure OpenAI
+// Prix par million de tokens : à recopier depuis la page de tarifs Azure OpenAI
 const decimal prixEntree = 0.75m;
 const decimal prixSortie = 4.50m;
 long entree = response.Usage?.InputTokenCount ?? 0;
