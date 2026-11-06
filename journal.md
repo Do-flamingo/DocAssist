@@ -1,4 +1,33 @@
 # Journal DocAssist
+## S2 · Séance 3 — mer. 4 nov. 2026
+**Fait**
+- 4 tests de LectureQuestion écrits à la main + stub NotImplementedException ; commit des tests rouges
+- 1er passage de l'agent : il a refusé d'implémenter et signalé la coquille « espece »
+  → la règle d'AGENTS.md (signaler plutôt que modifier les tests) fonctionne
+- Tests corrigés : coquille, " " au lieu de "", vrai critère « Qu'est-ce qu'un Pod ? », namespace
+- Prompt court (« relis les tests, implémente l'US-001 ») → LectureQuestion + Program.cs,
+  dotnet build + dotnet test verts (7 tests)
+- 5e test ajouté après coup (« Pod ») → vert sans retouche du code
+- Vérification manuelle : avec question → réponse ; sans argument → usage, $LASTEXITCODE = …
+**Chiffres**
+- Itérations de l'agent : … ; coût Azure de la séance : …
+**Appris**
+- L'US est la source de vérité ; les tests traduisent ses critères un par un
+- Un test faux est rouge aussi → relire chaque test en le comparant à l'US avant de commiter
+- Un test doit être assez strict pour faire échouer une implémentation fausse
+- Prompt = quelle US + ce qui a changé ; une règle oubliée se corrige dans l'US ou AGENTS.md
+- Un test ajouté après coup détecte le surapprentissage
+**Bloqué / résolu**
+- Coquille dans mes tests → signalée par l'agent → corrigée
+- ⚠️ Tests corrigés commités avec l'implémentation → git diff tests/ ne prouve plus rien.
+  Désormais : un commit des tests corrigés AVANT de relancer l'agent
+**Questions de contrôle** (de tête)
+1. Pourquoi c'est moi qui écris les tests, et pas l'agent : …
+2. Pourquoi commiter les tests rouges avant l'agent : …
+3. Le surapprentissage, et comment je l'ai vérifié : …
+**Prochaine séance**
+- S2 · Séance 4 : grille de revue, appliquée au diff de l'US-001
+
 
 ## S2 · Séance 2 — mer. 4 nov. 2026
 **Fait**

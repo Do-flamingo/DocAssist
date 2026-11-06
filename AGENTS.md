@@ -48,6 +48,7 @@ J'ai créé ce projet pour ma formation personnel sur le developpement .NET IA
 ## Avant de dire « terminé »
 - Lister les fichiers modifiés, avec la raison de chaque changement.
 - Si une consigne est ambiguë : poser une question plutôt que deviner.
+- dotnet format --verify-no-changes
 
 ## Pièges connus
 - gpt-5.4-mini est un modèle de raisonnement : ne jamais passer `Temperature` (l'API le refuse).
