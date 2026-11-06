@@ -1,4 +1,34 @@
 # Journal DocAssist
+
+## S2 · Séance 4 — ven. 6 nov. 2026
+**Fait**
+- `docs/grille-revue.md` : preuves et périmètre, conformité à l'US, tests, sécurité et coût,
+  lisibilité, points positifs + verdict
+- Revue de l'US-001 avec la grille :
+  - Comportement non demandé (nettoyage de chaque argument) → accepté : critère ajouté à l'US
+    + test `Depuis_ignore_les_arguments_vide_au_milieu` (8 tests verts)
+  - Mise en forme (indentation, espaces en fin de ligne) → `dotnet format` ;
+    `dotnet format --verify-no-changes` ajouté à « Avant de dire terminé » dans AGENTS.md
+  - Usage sur stdout au lieu de stderr → décision : …
+  - Preuve `git diff tests/` cassée : tests corrigés commités avec l'implémentation
+- Revue par l'agent (session neuve, mode Plan) : il a vu … ; il a raté … ; moi, j'ai raté …
+- ✅ Livrable S2 : AGENTS.md, modèle d'US et grille de revue dans le dépôt, éprouvés sur l'US-001
+**Appris**
+- Une grille rend la revue reproductible : mêmes questions, même ordre, à chaque diff
+- Ordre : preuves et périmètre → conformité → tests → sécurité → lisibilité
+- Défaut typique de l'agent : en faire plus que demandé → on accepte (US + test) ou on retire
+- Un trou dans l'US = l'agent choisit à ma place → corriger l'US ou le modèle
+- La revue porte sur l'état du fichier, mes propres défauts compris
+- Relecteur : session neuve, et on lui fait ignorer le style
+**À finir**
+- Usage sur stderr (`Console.Error.WriteLine`) si je le décide ; ligne « Sorties console » dans `_modele.md`
+**Questions de contrôle** (de tête)
+1. Pourquoi commencer par les preuves et le périmètre : …
+2. Ce qui est spécifique à la revue d'un code écrit par un agent : …
+3. Pourquoi une session neuve, et ignorer le style : …
+**Prochaine séance**
+- S3 · Séance 1 : embeddings et similarité cosinus
+
 ## S2 · Séance 3 — mer. 4 nov. 2026
 **Fait**
 - 4 tests de LectureQuestion écrits à la main + stub NotImplementedException ; commit des tests rouges
