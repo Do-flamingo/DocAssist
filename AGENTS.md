@@ -8,6 +8,7 @@ J'ai créé ce projet pour ma formation personnel sur le developpement .NET IA
 - .NET 10, c#
 - Microsft.Extensions.AI (IChatClient) + AZURE OPENAI (déploiement 'gpt-5.4-mini', modèle de raisonnement)
 - Authentification sans clé : 'AzureCliCredential' en local
+- Embeddings : déploiement `text-embedding-3-small` (`IEmbeddingGenerator`), sur la même ressource Azure
   
 ## Structure
 - `DocAssist.slnx` : solution, à la racine
@@ -20,8 +21,9 @@ J'ai créé ce projet pour ma formation personnel sur le developpement .NET IA
 
 ## Commandes
 - Vérification obligatoire avant de dire " terminé " : `dotnet build` puis `dotnet test`, depuis la racine 
-- Prérequis: `az login` fait, user-secrets `AZURE_OPENAI_ENDPOINT` et `AZURE_OPENAI_GPT_NAME` définis
-  Ne pas le lancer sans demande. Si un secret manque, s'arreter et le signaler. Ne jamais l'écrire dans un fichier.
+- Prérequis pour lancer une console : `az login` fait ; user-secrets `AZURE_OPENAI_ENDPOINT` +
+  `AZURE_OPENAI_GPT_NAME` (Cli) ou `AZURE_OPENAI_EMBEDDING_NAME` (Recherche).
+  Si un secret manque : s'arrêter et le signaler, ne jamais l'écrire dans un fichier.
 
 ## Tests
 - Projet : `tests/DocAssist.Cli.Tests` (xUnit).

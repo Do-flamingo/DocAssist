@@ -1,5 +1,38 @@
 # Journal DocAssist
 
+## S3 · Séance 1 — sam. 7 nov. 2026
+**Fait**
+- Déploiement `text-embedding-3-small` sur doflamingoAIResources (Model catalog → « embedding » → Deploy),
+  nom dans le user-secret AZURE_OPENAI_EMBEDDING_NAME
+- Nouvelle console `src/DocAssist.Recherche` (ajoutée à la solution) : 10 phrases → embeddings
+  en un seul appel → 2 plus proches voisines par similarité cosinus
+- Package ajouté : System.Numerics.Tensors (TensorPrimitives.CosineSimilarity), justifié
+- Exploration : contenu d'un vecteur (dimension, min/max, norme), Norm / Dot / CosineSimilarity
+**Chiffres**
+- Dimension : … ; tokens pour 10 phrases : … ; norme d'un vecteur : …
+- [2]↔[3] (FR/EN) : … ; [6]↔[7] (sans mot commun) : … ; [8] pod de café → plus proche : …
+**Appris**
+- Embedding = le sens d'un texte en vecteur : 1 536 nombres d'environ ±0,03, norme 1
+- Sens proche = vecteurs proches, même sans mot commun ou dans une autre langue
+- Cosinus = produit scalaire ÷ (norme A × norme B) : mesure l'angle, de -1 à 1
+- Vecteurs normalisés → cosinus = produit scalaire
+- Un embedding ne se lit pas, il se compare ; uniquement entre vecteurs du même modèle
+- Une ressource Azure = endpoint + droits ; plusieurs déploiements ; standard = payé à l'usage
+- TensorPrimitives : calcul sur des Span, vectorisé (SIMD) ; Memory pour stocker, Span pour calculer
+- Force brute (tout comparer) suffit pour 10 phrases ; en phase 2, index vectoriel (HNSW)
+- ≈ 6 Ko par vecteur → le stockage devient un choix d'architecture à grande échelle
+**Bloqué / résolu**
+- « Modèles + points de terminaison » introuvable → vue Azure OpenAI classique :
+  Model catalog, ou Shared resources → Deployments
+- TensorPrimitives non reconnu → using manquant + package absent : il n'arrive PAS avec
+  Microsoft.Extensions.AI (vérifié dans obj/project.assets.json)
+**Questions de contrôle** (de tête)
+1. Un embedding, et ce que mesure la similarité cosinus : …
+2. Pourquoi le « pod de café » est loin des phrases Kubernetes : …
+3. Comparer des vecteurs de deux modèles différents : …
+**Prochaine séance**
+- S3 · Séance 2 : Python express pour un développeur C# (syntaxe, environnements virtuels, pip)
+
 ## S2 · Séance 4 — ven. 6 nov. 2026
 **Fait**
 - `docs/grille-revue.md` : preuves et périmètre, conformité à l'US, tests, sécurité et coût,
