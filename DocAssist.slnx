@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/DocAssist.Cli/DocAssist.Cli.csproj" />
+    <Project Path="src/DocAssist.Recherche/DocAssist.Recherche.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/DocAssist.Cli.Tests/DocAssist.Cli.Tests.csproj" />
