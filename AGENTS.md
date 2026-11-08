@@ -8,13 +8,15 @@ J'ai créé ce projet pour ma formation personnel sur le developpement .NET IA
 - .NET 10, c#
 - Microsft.Extensions.AI (IChatClient) + AZURE OPENAI (déploiement 'gpt-5.4-mini', modèle de raisonnement)
 - Authentification sans clé : 'AzureCliCredential' en local
-
+  
 ## Structure
-- `DocAssist.slnx`: solution, à la racine
-- `src\DocAssist.Cli`: console actuelle (appel au modèle + réponse en JSON typée)
+- `DocAssist.slnx` : solution, à la racine
+- `src/DocAssist.Cli/` : console de questions (appel au modèle, réponse JSON typée)
+- `src/DocAssist.Recherche/` : embeddings et similarité cosinus ; deviendra la recherche sémantique
+- `tests/DocAssist.Cli.Tests/` : tests xUnit de la console
+- `docs/us/` : user stories (`_modele.md` = modèle vide) ; `docs/grille-revue.md` : grille de revue
 - `journal.md`, `plus-tard.md` : suivi personnel de l'auteur
 - Cible, à ne PAS créer sans demande : `src/Api`, `src/Ingestion.Worker`, `eval/`, `deploy/helm`, `docs/adr`
-- `tests/DocAssist.Cli.Tests` : Projet de test de la console  
 
 ## Commandes
 - Vérification obligatoire avant de dire " terminé " : `dotnet build` puis `dotnet test`, depuis la racine 
