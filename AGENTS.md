@@ -17,7 +17,8 @@ J'ai créé ce projet pour ma formation personnel sur le developpement .NET IA
 - `tests/DocAssist.Cli.Tests/` : tests xUnit de la console
 - `docs/us/` : user stories (`_modele.md` = modèle vide) ; `docs/grille-revue.md` : grille de revue
 - `journal.md`, `plus-tard.md` : suivi personnel de l'auteur
-- Cible, à ne PAS créer sans demande : `src/Api`, `src/Ingestion.Worker`, `eval/`, `deploy/helm`, `docs/adr`
+- Cible, à ne PAS créer sans demande : `src/Api`, `src/Ingestion.Worker`, `deploy/helm`, `docs/adr`
+- `eval/` : scripts Python (évaluation en phase 3) ; environnement virtuel `eval/.venv` (non commité)
 
 ## Commandes
 - Vérification obligatoire avant de dire " terminé " : `dotnet build` puis `dotnet test`, depuis la racine 

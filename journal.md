@@ -1,5 +1,37 @@
 # Journal DocAssist
 
+## S3 · Séance 2 — lun. 9 nov. 2026
+**Fait**
+- Python 3.13 installé (winget), vérifié avec `py --version`
+- Environnement virtuel `eval/.venv`, activé avec `.\.venv\Scripts\Activate.ps1`, pip mis à jour
+- `.gitignore` : `.venv/` et `__pycache__/` (vérifié avec `git check-ignore -v`)
+- `eval/requirements.txt` (`numpy>=2`), installé avec `pip install -r requirements.txt`
+- `eval/bases.py` : dataclass, compréhension de liste, Counter, cosinus avec numpy, try/except
+- Explication ligne par ligne du script
+**Chiffres**
+- Cosinus du tableau de la séance 1 : … / … / … / … (attendu : 1,00 / 0,71 / 0,00 / -1,00)
+- Message de l'erreur sur des vecteurs de longueurs différentes : …
+**Appris**
+- Python s'exécute de haut en bas ; def et class sont des instructions ; pas de Main
+- L'indentation est la syntaxe : `:` ouvre un bloc
+- `if __name__ == "__main__":` = point d'entrée, ignoré quand le fichier est importé
+- `@dataclass` ≈ record, mais modifiable par défaut (frozen=True) ; types non vérifiés à l'exécution
+- Compréhension de liste `[x for x in xs if …]` = Where + Select + ToList ; `( … )` = version paresseuse
+- `Counter` ≈ GroupBy + Count ; f-string ≈ interpolation ; `:.2f` ≈ F2
+- numpy = TensorPrimitives en Python : np.dot, np.linalg.norm sur des np.array
+- venv par projet ; requirements.txt se commite, .venv jamais
+**Bloqué / résolu**
+- … (alias python → Microsoft Store ? Activate.ps1 bloqué ?)
+**À finir**
+- bases.py incomplet dans le commit : rétablir imports, classe Phrase et liste phrases (sinon NameError)
+- AGENTS.md : retirer eval/ des « Cible », ajouter Structure eval/, commande Python, interdit pip hors venv
+**Questions de contrôle** (de tête)
+1. Un environnement virtuel et son équivalent .NET : …
+2. Pourquoi commiter requirements.txt mais pas .venv : …
+3. phrases.Where(p => p.Langue == "fr").Select(p => p.Texte).ToList() en Python : …
+**Prochaine séance**
+- S3 · Séance 3 : Python, lire du JSON et appeler le modèle avec le SDK Azure
+
 ## S3 · Séance 1 — sam. 7 nov. 2026
 **Fait**
 - Déploiement `text-embedding-3-small` sur doflamingoAIResources (Model catalog → « embedding » → Deploy),
