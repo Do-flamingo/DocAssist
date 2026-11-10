@@ -494,3 +494,7 @@ data/
 # Résultats d'évaluation et logs locaux
 eval-results/
 *.log
+
+# Python
+.venv/
+__pycache__/
