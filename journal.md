@@ -1,5 +1,36 @@
 # Journal DocAssist
 
+## S3 · Séance 3 — sam. 14 et dim. 15 nov. 2026
+**Fait**
+- `eval/requirements.txt` : openai, azure-identity ; variable AZURE_OPENAI_GPT_NAME (setx)
+- `eval/questions.json` : 5 questions avec `hors_sujet_attendu`
+- `eval/appel_modele.py` : lit le JSON, appelle gpt-5.4-mini sans clé, compare obtenu et attendu,
+  affiche le score, écrit `resultats.json` (ignoré par Git)
+- Explication ligne par ligne du script et de l'authentification
+**Chiffres**
+- Score : …/5 ; question(s) en KO : …
+- Tokens pour une question : … envoyés, … reçus
+**Appris**
+- JSON ↔ Python : objet = dict, tableau = list, null = None ; loads/dumps (chaîne), load/dump (fichier)
+- Sous Windows, toujours `encoding="utf-8"` ; `ensure_ascii=False` garde les accents
+- Authentification : az login → AzureCliCredential → jeton Entra ID (qui, pour quel service, ~1 h)
+  → en-tête Authorization: Bearer → Azure vérifie le jeton (401) puis le rôle (403)
+- Même mécanisme en C# et en Python ; sur AKS, seule la source de l'identité change (Workload Identity)
+- Mode JSON = JSON valide, mais clés non garanties ; GetResponseAsync<T> envoie un schéma
+- Modèle de raisonnement : max_completion_tokens, pas max_tokens
+- Évaluation = jeu de test + exécution + comparaison + score ; Python parce que Ragas est en Python
+- Limite : le script évalue une copie du prompt, pas le vrai DocAssist
+- requirements.txt = la recette (commitée) ; .venv = le résultat local (jamais commité)
+**Bloqué / résolu**
+- KeyError AZURE_OPENAI_GPT_NAME malgré setx → le terminal de VS Code hérite des variables de VS Code
+  → fermer toutes les fenêtres de VS Code, ou `$env:NOM = "valeur"` pour dépanner
+**Questions de contrôle** (de tête)
+1. Correspondances JSON ↔ Python, et pourquoi encoding="utf-8" : …
+2. Comment le script s'authentifie sans clé, et quoi sur AKS : …
+3. En quoi questions.json et le score préfigurent la phase 3 : …
+**Prochaine séance**
+- S3 · Séance 4 : recherche sémantique en mémoire sur 20 pages de la doc Kubernetes
+
 ## S3 · Séance 2 — lun. 9 nov. 2026
 **Fait**
 - Python 3.13 installé (winget), vérifié avec `py --version`

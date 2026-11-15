@@ -1,14 +1,44 @@
-﻿
-using Azure.AI.OpenAI;
+﻿using Azure.AI.OpenAI;
 using Azure.Identity;
+using CommunityToolkit.VectorData.InMemory;
 using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Configuration;
-using System.Numerics.Tensors;
+using Microsoft.Extensions.VectorData;
 
-var config = new ConfigurationBuilder()
-    .AddUserSecrets<Program>()
-    .Build();
+const string dossierCorpus = "data/website/content/en/docs/concepts";
 
+string[] pages =
+[
+    "overview/components.md",
+    "overview/working-with-objects/labels.md",
+    "overview/working-with-objects/namespaces.md",
+    "workloads/pods/_index.md",
+    "workloads/pods/pod-lifecycle.md",
+    "workloads/pods/init-containers.md",
+    "workloads/controllers/deployment.md",
+    "workloads/controllers/replicaset.md",
+    "workloads/controllers/statefulset.md",
+    "workloads/controllers/daemonset.md",
+    "workloads/controllers/job.md",
+    "workloads/autoscaling/horizontal-pod-autoscale.md",
+    "services-networking/service.md",
+    "services-networking/ingress.md",
+    "services-networking/network-policies.md",
+    "storage/volumes.md",
+    "storage/persistent-volumes.md",
+    "configuration/configmap.md",
+    "configuration/secret.md",
+    "containers/images.md"
+];
+
+if (!Directory.Exists(dossierCorpus))
+{
+    Console.Error.WriteLine($"Corpus introuvable : {dossierCorpus}. Lance la console depuis la racine du dépôt.");
+    Environment.ExitCode = 1;
+    return;
+}
+
+var config = new ConfigurationBuilder().AddUserSecrets<Program>().Build();
 string endpoint = config["AZURE_OPENAI_ENDPOINT"]
     ?? throw new InvalidOperationException("Secret AZURE_OPENAI_ENDPOINT manquant");
 string deployment = config["AZURE_OPENAI_EMBEDDING_NAME"]
@@ -19,36 +49,45 @@ IEmbeddingGenerator<string, Embedding<float>> generateur =
         .GetEmbeddingClient(deployment)
         .AsIEmbeddingGenerator();
 
-string[] phrases =
-[
-    "Un Pod regroupe un ou plusieurs conteneurs qui partagent le réseau.",
-    "Le plus petit objet déployable dans Kubernetes est le Pod.",
-    "A Pod is the smallest deployable unit in Kubernetes.",
-    "Un Service expose un ensemble de Pods sous une adresse stable.",
-    "Pour rendre une application accessible dans le cluster, on crée un Service.",
-    "Un PersistentVolume fournit un stockage qui survit aux Pods.",
-    "Quand un conteneur redémarre, les fichiers qu'il avait écrits sont perdus.",
-    "Le pod de café est coincé dans la machine à expresso.",
-    "La recette du couscous demande de la semoule et des légumes.",
-    "Il pleut sur Paris depuis ce matin."
-];
+// 1. Découper les pages en passages
+List<Passage> passages = [];
+foreach (string page in pages)
+    passages.AddRange(Decoupage.EnPassages(page, File.ReadAllText(Path.Combine(dossierCorpus, page))));
+for (int i = 0; i < passages.Count; i++)
+    passages[i].Cle = i;
 
-GeneratedEmbeddings<Embedding<float>> vecteurs = await generateur.GenerateAsync(phrases);
+//2.Calculer les embeddings par lots et les ranger dans le magasin de vecteurs
+var magasin = new InMemoryVectorStore();
+VectorStoreCollection<int, Passage> collection = magasin.GetCollection<int, Passage>("passages");
+await collection.EnsureCollectionExistsAsync();
 
-Console.WriteLine($"Dimension : {vecteurs[0].Vector.Length}");
-Console.WriteLine($"Tokens    : {vecteurs.Usage?.InputTokenCount}");
-Console.WriteLine();
-
-for (int i = 0; i < phrases.Length; i++)
+long tokens = 0;
+foreach (Passage[] lot in passages.Chunk(50))
 {
-    var voisines = Enumerable.Range(0, phrases.Length)
-        .Where(j => j != i)
-        .Select(j => (Index: j, Score: TensorPrimitives.CosineSimilarity(
-            vecteurs[i].Vector.Span, vecteurs[j].Vector.Span)))
-        .OrderByDescending(v => v.Score)
-        .Take(2);
+    var vecteurs = await generateur.GenerateAsync(lot.Select(p => p.Texte));
+    for (int i = 0; i < lot.Length; i++)
+        lot[i].Vecteur = vecteurs[i].Vector;
+    await collection.UpsertAsync(lot);
+    tokens += vecteurs.Usage?.InputTokenCount ?? 0;
+}
+Console.WriteLine($"{passages.Count} passages indexés, {tokens} tokens");
 
-    Console.WriteLine($"[{i + 1}] {phrases[i]}");
-    foreach (var (index, score) in voisines)
-        Console.WriteLine($"      {score:F3}  [{index + 1}] {phrases[index]}");
+// 3. Chercher les 3 passages les plus proches de chaque question
+while (true)
+{
+    Console.Write("\nQuestion (vide pour quitter) : ");
+    string? question = Console.ReadLine();
+    if (string.IsNullOrWhiteSpace(question))
+        break;
+
+    ReadOnlyMemory<float> vecteurQuestion = await generateur.GenerateVectorAsync(question);
+    await foreach (VectorSearchResult<Passage> resultat in collection.SearchAsync(vecteurQuestion, top: 3))
+    {
+        string apercu = resultat.Record.Texte.ReplaceLineEndings(" ");
+        if (apercu.Length > 160)
+            apercu = apercu[..160] + "…";
+
+        Console.WriteLine($"  {resultat.Score:F3}  {resultat.Record.Source} › {resultat.Record.Titre}");
+        Console.WriteLine($"         {apercu}");
+    }
 }

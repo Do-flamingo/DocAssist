@@ -13,18 +13,20 @@ J'ai créé ce projet pour ma formation personnel sur le developpement .NET IA
 ## Structure
 - `DocAssist.slnx` : solution, à la racine
 - `src/DocAssist.Cli/` : console de questions (appel au modèle, réponse JSON typée)
-- `src/DocAssist.Recherche/` : embeddings et similarité cosinus ; deviendra la recherche sémantique
+- `src/DocAssist.Recherche/` : recherche sémantique en mémoire sur la doc Kubernetes (Passage, Decoupage)
 - `tests/DocAssist.Cli.Tests/` : tests xUnit de la console
 - `docs/us/` : user stories (`_modele.md` = modèle vide) ; `docs/grille-revue.md` : grille de revue
 - `journal.md`, `plus-tard.md` : suivi personnel de l'auteur
 - Cible, à ne PAS créer sans demande : `src/Api`, `src/Ingestion.Worker`, `deploy/helm`, `docs/adr`
 - `eval/` : scripts Python (évaluation en phase 3) ; environnement virtuel `eval/.venv` (non commité)
+- data/website/ : corpus Kubernetes cloné, ignoré par Git, ne jamais le commiter
 
 ## Commandes
 - Vérification obligatoire avant de dire " terminé " : `dotnet build` puis `dotnet test`, depuis la racine 
 - Prérequis pour lancer une console : `az login` fait ; user-secrets `AZURE_OPENAI_ENDPOINT` +
   `AZURE_OPENAI_GPT_NAME` (Cli) ou `AZURE_OPENAI_EMBEDDING_NAME` (Recherche).
-  Si un secret manque : s'arrêter et le signaler, ne jamais l'écrire dans un fichier.
+- Si un secret manque : s'arrêter et le signaler, ne jamais l'écrire dans un fichier.
+- la console Recherche se lance depuis la racine et lit le corpus dans data/website/
 
 ## Tests
 - Projet : `tests/DocAssist.Cli.Tests` (xUnit).
