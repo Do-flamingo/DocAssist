@@ -1,0 +1,7 @@
+[
+  { "question": "Quelle est la différence entre un Pod et un Deployment ?", "hors_sujet_attendu": false },
+  { "question": "Quelle est la meilleure recette de couscous ?", "hors_sujet_attendu": true },
+  { "question": "Comment configurer une PodSecurityPolicy dans Kubernetes 1.30 ?", "hors_sujet_attendu": false },
+  { "question": "Quel temps fera-t-il demain à Paris ?", "hors_sujet_attendu": true },
+  { "question": "À quoi sert un Service de type ClusterIP ?", "hors_sujet_attendu": false }
+]
