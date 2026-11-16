@@ -8,10 +8,5 @@ Tri : chaque samedi, pendant la revue.
 - c'est quoi un modèle de raisonement ? quels sont les autres types de modèles ?
 - markdown c'est quoi
 
-## Déjà prévu dans le plan (ne pas faire avant)
-- [ ] Embeddings et RAG → S4
-- [ ] Observabilité et KQL → S22
-- [ ] Prompt injection et sécurité → S26
-
 ## Abandonné
 - ~~exemple~~ (raison)

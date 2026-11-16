@@ -1,5 +1,37 @@
 # Journal DocAssist
 
+## S3 · Séance 4 — dim. 15 nov. 2026
+**Fait**
+- Corpus : clone partiel de kubernetes/website dans `data/website/` (dossier concepts, ignoré par Git)
+  Commit du corpus : … (`git -C data/website rev-parse --short HEAD`)
+- `Passage.cs` (clé, source, titre, texte, vecteur 1536) et `Decoupage.cs` (coupe aux titres ## et ###)
+- `Program.cs` : 20 pages → passages → embeddings par lots de 50 → magasin en mémoire
+  → boucle de questions → 3 passages les plus proches
+- Package ajouté : CommunityToolkit.VectorData.InMemory (magasin de vecteurs en mémoire)
+- AGENTS.md : structure Recherche, data/website, lancement depuis la racine
+- ✅ Livrable S3 : une console qui retrouve les 3 passages les plus proches d'une question
+**Chiffres**
+- … passages indexés, … tokens ; durée de l'indexation : …
+**Observations**
+- Exposer une application (FR) : pages … ; scores …
+- Même question en anglais : scores … (plus hauts / plus bas ?)
+- Données d'un Pod supprimé : pages …
+- Couscous : 3 passages renvoyés quand même, scores …
+**Appris**
+- Pipeline : pages → passages → embeddings → magasin → question → embedding → les plus proches
+- Microsoft.Extensions.VectorData = l'IChatClient des magasins de vecteurs
+- Une recherche vectorielle renvoie toujours les plus proches : proche ≠ pertinent
+- La qualité dépend d'abord du découpage ; en mémoire, tout est recalculé à chaque lancement
+- Clone partiel : --depth 1 (historique), --filter=blob:none (contenus), --sparse (dossiers)
+**Bloqué / résolu**
+- …
+**Questions de contrôle** (de tête)
+1. Les étapes du pipeline : …
+2. Pourquoi VectorStoreCollection plutôt que ma boucle TensorPrimitives : …
+3. Pourquoi des passages pour le couscous, et ce que ça implique : …
+**Prochaine séance**
+- Checkpoint phase 1, puis S4 · Séance 1 (RAG de bout en bout)
+
 ## S3 · Séance 3 — sam. 14 et dim. 15 nov. 2026
 **Fait**
 - `eval/requirements.txt` : openai, azure-identity ; variable AZURE_OPENAI_GPT_NAME (setx)
